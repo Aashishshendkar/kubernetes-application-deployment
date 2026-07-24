@@ -1,5 +1,4 @@
 #  GitOps Kubernetes Deployment — ArgoCD
-
 A Kubernetes deployment pipeline where Git is the only way in — no one runs `kubectl apply`
 by hand. Every change to the app or its manifests goes through a Git commit, and ArgoCD takes
 care of the rest automatically. Built as part of an AWS DevOps internship project.
@@ -7,13 +6,11 @@ care of the rest automatically. Built as part of an AWS DevOps internship projec
 ---
 
 ##  The Problem
-
 The team was migrating to Kubernetes, but manual `kubectl` changes in production meant no
 real history of what changed, when, or why — and no easy way to roll back or audit a bad
 change.
 
 ##  The Solution
-
 A GitOps workflow: application manifests live in a Git repo, ArgoCD continuously watches that
 repo, and any commit is automatically synced to the cluster. Git becomes the single source of
 truth for what's actually running.
@@ -21,7 +18,6 @@ truth for what's actually running.
 ---
 
 ##  How It's Built
-
 | Stage | Tool | Job |
 |---|---|---|
 | Containerization | **Docker** | Packages the app into a portable image |
@@ -37,18 +33,15 @@ Developer pushes code/manifest change → GitHub repo updated → ArgoCD detects
 ```
 
 ##  Containerization (`Dockerfile`)
-
 Built on top of `nginx:latest`, strips the default Nginx placeholder page, and copies the
 application's static files in — a minimal, predictable image with nothing extra baked in.
 
 ##  Kubernetes Resources (`k8s/`)
-
 - **`deployment.yaml`** — runs `gitops-web-app`, 2 replicas, in the `production` namespace,
   with defined CPU/memory requests and limits
 - **`service.yaml`** — exposes the deployment via a `LoadBalancer` service on port 80
 
 ##  ArgoCD Configuration (`argocd/application.yaml`)
-
 Points ArgoCD at the GitHub repo's `main` branch and enables:
 - **`prune: true`** — removes resources no longer defined in Git
 - **`selfHeal: true`** — automatically reverts any manual cluster changes back to match Git
@@ -60,11 +53,9 @@ cluster by hand, ArgoCD's self-heal quietly reverts it back to the Git-defined s
 ---
 
 ##  Architecture Diagram
-
 ![Architecture Diagram](architecture-diagram.png)
 
 ##  Proof / Screenshots
-
 **ArgoCD Sync Status** — application Healthy & Synced
 ![ArgoCD Sync Status](screenshots/argocd-sync-status.png)
 
@@ -77,7 +68,6 @@ cluster by hand, ArgoCD's self-heal quietly reverts it back to the Git-defined s
 ---
 
 ##  Repo Structure
-```
 -kubernetes--application-deployment/
 ├── README.md
 ├── Dockerfile
