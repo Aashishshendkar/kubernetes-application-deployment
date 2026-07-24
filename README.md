@@ -2,9 +2,7 @@
 A Kubernetes deployment pipeline where Git is the only way in — no one runs `kubectl apply`
 by hand. Every change to the app or its manifests goes through a Git commit, and ArgoCD takes
 care of the rest automatically. Built as part of an AWS DevOps internship project.
-
 ---
-
 ##  The Problem
 The team was migrating to Kubernetes, but manual `kubectl` changes in production meant no
 real history of what changed, when, or why — and no easy way to roll back or audit a bad
